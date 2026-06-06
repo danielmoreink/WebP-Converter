@@ -1,4 +1,4 @@
-# WebP Animator
+# WebP Converter
 
 WebP Animator converts a folder of image frames into an animated WebP file using `ffmpeg`.
 
