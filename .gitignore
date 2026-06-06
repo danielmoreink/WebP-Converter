@@ -1,0 +1,30 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Virtual environments and local tooling
+.venv/
+venv/
+env/
+
+# Build outputs and temporary packaging folders
+build/
+dist/
+*.spec
+*.zip
+*.log
+
+# Local runtime bundle created while packaging the app.
+# The standalone EXE in "WebP Animator Single EXE/" is intentionally kept.
+.runtime/
+Start WebP Animator.cmd
+
+# Local test/conversion output
+transparent-test/
+sample-frames/
+*.webp
+!WebP Animator Single EXE/*.exe
+
+# Windows metadata
+Thumbs.db
+Desktop.ini
