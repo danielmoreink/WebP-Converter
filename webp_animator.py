@@ -17,6 +17,13 @@ from typing import Callable
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp", ".tif", ".tiff"}
 FFMPEG_WINGET_PACKAGE = "Gyan.FFmpeg"
+APP_ICON_ICO = Path("assets") / "app-icon.ico"
+APP_ICON_PNG = Path("assets") / "app-icon.png"
+
+
+def resource_path(relative_path: Path) -> Path:
+    base_path = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
+    return base_path / relative_path
 
 
 def console_write(message: str, error: bool = False) -> None:
@@ -165,6 +172,8 @@ def convert(args: SimpleNamespace, log: Callable[[str], None] = console_write) -
 class WebpAnimatorApp:
     def __init__(self) -> None:
         self.root = tk.Tk()
+        self.app_icon_image = None
+        self.set_app_icon()
         self.root.title("WebP Animator")
         self.root.geometry("820x650")
         self.root.minsize(760, 620)
@@ -189,6 +198,22 @@ class WebpAnimatorApp:
         self.refresh_ffmpeg_controls(show_warning=True)
 
         self.root.after(100, self.show_window)
+
+    def set_app_icon(self) -> None:
+        ico_path = resource_path(APP_ICON_ICO)
+        if ico_path.is_file():
+            try:
+                self.root.iconbitmap(default=str(ico_path))
+            except tk.TclError:
+                pass
+
+        png_path = resource_path(APP_ICON_PNG)
+        if png_path.is_file():
+            try:
+                self.app_icon_image = tk.PhotoImage(file=str(png_path))
+                self.root.iconphoto(True, self.app_icon_image)
+            except tk.TclError:
+                self.app_icon_image = None
 
     def build(self) -> None:
         main = ttk.Frame(self.root, padding=16)
